@@ -34,6 +34,12 @@ fn main() {
         return;
     }
 
+    // CHERIoT RTOS includes all the builtins
+    if target.os == "cheriotrtos" {
+        println!("cargo::rustc-check-cfg=cfg(kernel_user_helpers)");
+        return;
+    }
+
     // Forcibly enable memory intrinsics on wasm & SGX as we don't have a libc to
     // provide them.
     if (target.triple.contains("wasm") && !target.triple.contains("wasi"))
